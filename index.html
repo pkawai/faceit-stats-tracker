@@ -37,6 +37,8 @@
             display: flex;
             gap: 0.5rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .search-bar input {
@@ -46,7 +48,7 @@
             background: #16213e;
             color: #e0e0e0;
             font-size: 1rem;
-            width: 250px;
+            width: 220px;
         }
 
         .search-bar input:focus {
@@ -63,10 +65,16 @@
             font-size: 1rem;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
         }
 
         .search-bar button:hover {
             background: #ff6a1a;
+        }
+
+        .search-bar button:disabled {
+            background: #555;
+            cursor: not-allowed;
         }
 
         .placeholder {
@@ -79,6 +87,263 @@
         .placeholder p {
             margin: 0.5rem 0;
         }
+
+        /* Data source badge */
+        .data-source {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .data-source .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .badge-sample {
+            background: #3d2e00;
+            color: #ffc107;
+        }
+
+        .badge-live {
+            background: #003d1a;
+            color: #4caf50;
+        }
+
+        /* Player header */
+        .player-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: #16213e;
+            border-radius: 12px;
+            border-left: 4px solid #ff5500;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .player-header .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #0f3460;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff5500;
+        }
+
+        .player-header .info h2 {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .player-header .info .elo {
+            color: #ff5500;
+            font-weight: 600;
+        }
+
+        .player-header .info .level {
+            color: #888;
+            margin-left: 0.75rem;
+        }
+
+        /* Match table */
+        .table-container {
+            width: 100%;
+            max-width: 1100px;
+            overflow-x: auto;
+            border-radius: 12px;
+            background: #16213e;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .table-container h3 {
+            padding: 1rem 1.5rem 0.5rem;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead th {
+            background: #0f3460;
+            color: #ccc;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #1a1a3e;
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        tbody td {
+            padding: 0.7rem 1rem;
+            white-space: nowrap;
+        }
+
+        /* Win/Loss row coloring */
+        tr.win {
+            background: rgba(76, 175, 80, 0.08);
+        }
+
+        tr.loss {
+            background: rgba(244, 67, 54, 0.08);
+        }
+
+        tr.win:hover {
+            background: rgba(76, 175, 80, 0.14);
+        }
+
+        tr.loss:hover {
+            background: rgba(244, 67, 54, 0.14);
+        }
+
+        /* Result badge */
+        .result {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .result-win {
+            background: #1b5e20;
+            color: #4caf50;
+        }
+
+        .result-loss {
+            background: #b71c1c33;
+            color: #f44336;
+        }
+
+        /* KD coloring */
+        .kd-positive {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .kd-negative {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .kd-neutral {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        /* Map name styling */
+        .map-name {
+            color: #90caf9;
+            font-weight: 500;
+        }
+
+        /* Score styling */
+        .score {
+            font-weight: 600;
+        }
+
+        /* Loading spinner */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #333;
+            border-top: 4px solid #ff5500;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: #888;
+        }
+
+        /* Error message */
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #f44336;
+        }
+
+        .error h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .error p {
+            color: #888;
+        }
+
+        /* Match count selector */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .controls label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .controls select {
+            padding: 0.4rem 0.75rem;
+            border: 2px solid #333;
+            border-radius: 6px;
+            background: #16213e;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .controls select:focus {
+            outline: none;
+            border-color: #ff5500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .search-bar input { width: 180px; }
+            .player-header { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -88,26 +353,287 @@
     <div class="search-bar">
         <input type="text" id="username" placeholder="FACEIT Username">
         <input type="text" id="apiKey" placeholder="API Key (optional)">
-        <button onclick="fetchStats()">Fetch Stats</button>
+        <select id="matchCount">
+            <option value="5">Last 5</option>
+            <option value="10" selected>Last 10</option>
+            <option value="20">Last 20</option>
+        </select>
+        <button id="fetchBtn" onclick="fetchStats()">Fetch Stats</button>
     </div>
 
     <div id="content">
         <div class="placeholder">
             <p>Enter your FACEIT username to get started</p>
-            <p>Features coming soon...</p>
+            <p>Without an API key, sample data will be loaded</p>
         </div>
     </div>
 
     <script>
-        function fetchStats() {
-            const username = document.getElementById('username').value;
+        // ── Sample Data ─────────────────────────────────────────
+        const SAMPLE_PLAYER = {
+            nickname: 'SamplePlayer',
+            elo: 1847,
+            level: 7
+        };
+
+        const SAMPLE_MATCHES = [
+            { date: '2026-02-10', map: 'de_mirage', result: 'win', score: '13 / 8', kills: 24, deaths: 15, assists: 5, headshots: 12, hsPercent: 50, kdRatio: 1.60, rounds: 21, mvps: 4, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-09', map: 'de_inferno', result: 'loss', score: '11 / 13', kills: 18, deaths: 20, assists: 7, headshots: 8, hsPercent: 44, kdRatio: 0.90, rounds: 24, mvps: 2, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-09', map: 'de_anubis', result: 'win', score: '13 / 6', kills: 28, deaths: 11, assists: 3, headshots: 16, hsPercent: 57, kdRatio: 2.55, rounds: 19, mvps: 6, tripleKills: 3, quadroKills: 1, pentaKills: 0 },
+            { date: '2026-02-08', map: 'de_dust2', result: 'win', score: '13 / 10', kills: 21, deaths: 17, assists: 4, headshots: 10, hsPercent: 48, kdRatio: 1.24, rounds: 23, mvps: 3, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-08', map: 'de_nuke', result: 'loss', score: '9 / 13', kills: 14, deaths: 19, assists: 6, headshots: 5, hsPercent: 36, kdRatio: 0.74, rounds: 22, mvps: 1, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-07', map: 'de_ancient', result: 'win', score: '13 / 11', kills: 22, deaths: 18, assists: 8, headshots: 11, hsPercent: 50, kdRatio: 1.22, rounds: 24, mvps: 3, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-07', map: 'de_mirage', result: 'loss', score: '10 / 13', kills: 16, deaths: 21, assists: 3, headshots: 7, hsPercent: 44, kdRatio: 0.76, rounds: 23, mvps: 2, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-06', map: 'de_inferno', result: 'win', score: '13 / 5', kills: 26, deaths: 10, assists: 4, headshots: 14, hsPercent: 54, kdRatio: 2.60, rounds: 18, mvps: 5, tripleKills: 2, quadroKills: 1, pentaKills: 0 },
+            { date: '2026-02-06', map: 'de_vertigo', result: 'loss', score: '7 / 13', kills: 12, deaths: 22, assists: 5, headshots: 4, hsPercent: 33, kdRatio: 0.55, rounds: 20, mvps: 1, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-05', map: 'de_anubis', result: 'win', score: '13 / 9', kills: 20, deaths: 14, assists: 6, headshots: 9, hsPercent: 45, kdRatio: 1.43, rounds: 22, mvps: 3, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
+        ];
+
+        // ── FACEIT API ──────────────────────────────────────────
+        const API_BASE = 'https://open.faceit.com/data/v4';
+
+        async function fetchFromAPI(url, apiKey) {
+            const res = await fetch(url, {
+                headers: { 'Authorization': 'Bearer ' + apiKey }
+            });
+            if (!res.ok) {
+                const status = res.status;
+                if (status === 401) throw new Error('Invalid API key. Get one free at developers.faceit.com');
+                if (status === 404) throw new Error('Player not found on FACEIT');
+                if (status === 429) throw new Error('Rate limited. Please wait a moment and try again');
+                throw new Error('API error (' + status + ')');
+            }
+            return res.json();
+        }
+
+        async function getPlayerByNickname(nickname, apiKey) {
+            const data = await fetchFromAPI(
+                API_BASE + '/players?nickname=' + encodeURIComponent(nickname),
+                apiKey
+            );
+            // CS2 data lives under games.cs2
+            const cs2 = data.games?.cs2;
+            if (!cs2) {
+                throw new Error('Player "' + nickname + '" has no CS2 data on FACEIT');
+            }
+            return {
+                player_id: data.player_id,
+                nickname: data.nickname,
+                avatar: data.avatar,
+                elo: cs2.faceit_elo || 0,
+                level: cs2.skill_level || 0
+            };
+        }
+
+        async function getPlayerMatchStats(playerId, apiKey, limit) {
+            // Single endpoint that returns per-match stats — no need to call per match
+            const data = await fetchFromAPI(
+                API_BASE + '/players/' + playerId + '/games/cs2/stats?limit=' + limit,
+                apiKey
+            );
+            return data.items || [];
+        }
+
+        async function fetchLiveData(nickname, apiKey, limit) {
+            const player = await getPlayerByNickname(nickname, apiKey);
+            const items = await getPlayerMatchStats(player.player_id, apiKey, limit);
+
+            // Log first match to help debug field names
+            if (items.length > 0) {
+                console.log('FACEIT match stats fields:', Object.keys(items[0].stats));
+                console.log('First match raw data:', items[0].stats);
+            }
+
+            const matches = items.map(item => {
+                const s = item.stats;
+                const won = s['Result'] === '1';
+
+                // Parse date from "Match Finished At" (millisecond timestamp) or "Created At"
+                const timestamp = parseInt(s['Match Finished At'] || s['Created At'] || '0');
+                const date = timestamp > 0
+                    ? new Date(timestamp).toISOString().split('T')[0]
+                    : 'Unknown';
+
+                // Map name: remove "de_" prefix if present
+                const rawMap = s['Map'] || s['i1'] || 'Unknown';
+
+                // Score: use "Final Score" or "Score" field
+                const score = s['Final Score'] || s['Score'] || '-';
+
+                return {
+                    date,
+                    map: rawMap,
+                    result: won ? 'win' : 'loss',
+                    score,
+                    kills: parseInt(s['Kills']) || 0,
+                    deaths: parseInt(s['Deaths']) || 0,
+                    assists: parseInt(s['Assists']) || 0,
+                    headshots: parseInt(s['Headshots']) || 0,
+                    hsPercent: parseFloat(s['Headshots %']) || 0,
+                    kdRatio: parseFloat(s['K/D Ratio']) || 0,
+                    rounds: parseInt(s['Rounds']) || 0,
+                    mvps: parseInt(s['MVPs']) || 0,
+                    tripleKills: parseInt(s['Triple Kills']) || 0,
+                    quadroKills: parseInt(s['Quadro Kills']) || 0,
+                    pentaKills: parseInt(s['Penta Kills']) || 0,
+                };
+            });
+
+            return { player, matches };
+        }
+
+        // ── Rendering ───────────────────────────────────────────
+        function renderPlayerHeader(player, isLive) {
+            const initial = player.nickname.charAt(0).toUpperCase();
+            const badgeClass = isLive ? 'badge-live' : 'badge-sample';
+            const badgeText = isLive ? 'LIVE DATA' : 'SAMPLE DATA';
+
+            return `
+                <div class="data-source">
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                </div>
+                <div class="player-header">
+                    <div class="avatar">${initial}</div>
+                    <div class="info">
+                        <h2>${escapeHtml(player.nickname)}</h2>
+                        <span class="elo">ELO: ${player.elo}</span>
+                        <span class="level">Level ${player.level}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchTable(matches) {
+            if (matches.length === 0) {
+                return '<div class="error"><h3>No matches found</h3><p>This player has no recent CS2 matches on FACEIT.</p></div>';
+            }
+
+            let rows = '';
+            for (const m of matches) {
+                // Use API-provided K/D ratio if available, otherwise calculate
+                const kd = m.kdRatio > 0
+                    ? m.kdRatio.toFixed(2)
+                    : (m.deaths === 0 ? m.kills.toFixed(2) : (m.kills / m.deaths).toFixed(2));
+                const kdNum = parseFloat(kd);
+                const kdClass = kdNum > 1 ? 'kd-positive' : kdNum < 1 ? 'kd-negative' : 'kd-neutral';
+
+                // Use API-provided HS% if available, otherwise calculate
+                const hsPercent = m.hsPercent > 0
+                    ? Math.round(m.hsPercent)
+                    : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0);
+
+                const resultClass = m.result === 'win' ? 'result-win' : 'result-loss';
+                const rowClass = m.result === 'win' ? 'win' : 'loss';
+
+                rows += `
+                    <tr class="${rowClass}">
+                        <td>${m.date}</td>
+                        <td class="map-name">${escapeHtml(cleanMapName(m.map))}</td>
+                        <td><span class="result ${resultClass}">${m.result === 'win' ? 'W' : 'L'}</span></td>
+                        <td class="score">${escapeHtml(String(m.score))}</td>
+                        <td>${m.kills}</td>
+                        <td>${m.deaths}</td>
+                        <td>${m.assists}</td>
+                        <td class="${kdClass}">${kd}</td>
+                        <td>${hsPercent}%</td>
+                    </tr>
+                `;
+            }
+
+            return `
+                <div class="table-container">
+                    <h3>Recent Matches</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Map</th>
+                                <th>Result</th>
+                                <th>Score</th>
+                                <th>Kills</th>
+                                <th>Deaths</th>
+                                <th>Assists</th>
+                                <th>K/D</th>
+                                <th>HS%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // ── Helpers ─────────────────────────────────────────────
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function cleanMapName(map) {
+            return map.replace(/^de_/, '').replace(/^\w/, c => c.toUpperCase());
+        }
+
+        // ── Main ────────────────────────────────────────────────
+        async function fetchStats() {
+            const username = document.getElementById('username').value.trim();
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const limit = parseInt(document.getElementById('matchCount').value);
+            const content = document.getElementById('content');
+            const btn = document.getElementById('fetchBtn');
+
             if (!username) {
                 alert('Please enter a FACEIT username');
                 return;
             }
-            // Features will be built in separate branches
-            document.getElementById('content').innerHTML =
-                '<div class="placeholder"><p>Loading stats for: ' + username + '...</p></div>';
+
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+            content.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Fetching stats for ${escapeHtml(username)}...</p>
+                </div>
+            `;
+
+            try {
+                let player, matches, isLive;
+
+                if (apiKey) {
+                    // Fetch live data from FACEIT API
+                    const data = await fetchLiveData(username, apiKey, limit);
+                    player = data.player;
+                    matches = data.matches;
+                    isLive = true;
+                } else {
+                    // Use sample data
+                    player = { ...SAMPLE_PLAYER, nickname: username };
+                    matches = SAMPLE_MATCHES.slice(0, limit);
+                    isLive = false;
+                }
+
+                content.innerHTML =
+                    renderPlayerHeader(player, isLive) +
+                    renderMatchTable(matches);
+
+            } catch (err) {
+                content.innerHTML = `
+                    <div class="error">
+                        <h3>Failed to load stats</h3>
+                        <p>${escapeHtml(err.message)}</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+                            Try without an API key to see sample data, or check your key at
+                            <a href="https://developers.faceit.com" target="_blank" style="color: #ff5500;">developers.faceit.com</a>
+                        </p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Fetch Stats';
+            }
         }
     </script>
 </body>
