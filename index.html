@@ -1,38 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FACEIT CS2 Stats Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root[data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f3460;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --text-heading: #fff;
+            --border-color: #333;
+            --border-row: #1a1a3e;
+            --accent: #ff5500;
+            --accent-hover: #ff6a1a;
+            --win-bg: rgba(76, 175, 80, 0.08);
+            --win-bg-hover: rgba(76, 175, 80, 0.14);
+            --loss-bg: rgba(244, 67, 54, 0.08);
+            --loss-bg-hover: rgba(244, 67, 54, 0.14);
+            --card-shadow: rgba(0, 0, 0, 0.3);
         }
+
+        :root[data-theme="light"] {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8edf2;
+            --text-primary: #1a1a2e;
+            --text-secondary: #666;
+            --text-heading: #111;
+            --border-color: #d0d0d0;
+            --border-row: #eee;
+            --accent: #ff5500;
+            --accent-hover: #e64d00;
+            --win-bg: rgba(76, 175, 80, 0.12);
+            --win-bg-hover: rgba(76, 175, 80, 0.2);
+            --loss-bg: rgba(244, 67, 54, 0.1);
+            --loss-bg-hover: rgba(244, 67, 54, 0.18);
+            --card-shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a2e;
-            color: #e0e0e0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        h1 {
-            font-size: 2rem;
-            color: #ff5500;
+        /* ── Header ─── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
             margin-bottom: 0.5rem;
         }
 
-        .subtitle {
-            color: #888;
-            margin-bottom: 2rem;
+        h1 { font-size: 2rem; color: var(--accent); }
+
+        .subtitle { color: var(--text-secondary); margin-bottom: 2rem; }
+
+        /* ── Theme Toggle ─── */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
 
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* ── Search Bar ─── */
         .search-bar {
             display: flex;
             gap: 0.5rem;
@@ -41,24 +105,26 @@
             justify-content: center;
         }
 
-        .search-bar input {
+        .search-bar input, .search-bar select {
             padding: 0.75rem 1rem;
-            border: 2px solid #333;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
-            background: #16213e;
-            color: #e0e0e0;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             font-size: 1rem;
-            width: 220px;
+            transition: border-color 0.2s, background 0.3s;
         }
 
-        .search-bar input:focus {
+        .search-bar input { width: 220px; }
+
+        .search-bar input:focus, .search-bar select:focus {
             outline: none;
-            border-color: #ff5500;
+            border-color: var(--accent);
         }
 
         .search-bar button {
             padding: 0.75rem 1.5rem;
-            background: #ff5500;
+            background: var(--accent);
             color: white;
             border: none;
             border-radius: 8px;
@@ -68,33 +134,21 @@
             transition: background 0.2s;
         }
 
-        .search-bar button:hover {
-            background: #ff6a1a;
-        }
+        .search-bar button:hover { background: var(--accent-hover); }
+        .search-bar button:disabled { background: #555; cursor: not-allowed; }
 
-        .search-bar button:disabled {
-            background: #555;
-            cursor: not-allowed;
-        }
-
+        /* ── Placeholder ─── */
         .placeholder {
             text-align: center;
-            color: #555;
+            color: var(--text-secondary);
             margin-top: 4rem;
             font-size: 1.2rem;
         }
 
-        .placeholder p {
-            margin: 0.5rem 0;
-        }
+        .placeholder p { margin: 0.5rem 0; }
 
-        /* Data source badge */
-        .data-source {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: #888;
-        }
+        /* ── Data source badge ─── */
+        .data-source { text-align: center; margin-bottom: 1rem; font-size: 0.85rem; }
 
         .data-source .badge {
             display: inline-block;
@@ -103,83 +157,162 @@
             font-weight: 600;
         }
 
-        .badge-sample {
-            background: #3d2e00;
-            color: #ffc107;
-        }
+        .badge-sample { background: #3d2e00; color: #ffc107; }
+        .badge-live { background: #003d1a; color: #4caf50; }
 
-        .badge-live {
-            background: #003d1a;
-            color: #4caf50;
-        }
-
-        /* Player header */
+        /* ── Player header ─── */
         .player-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 1.5rem;
             padding: 1rem 1.5rem;
-            background: #16213e;
+            background: var(--bg-secondary);
             border-radius: 12px;
-            border-left: 4px solid #ff5500;
+            border-left: 4px solid var(--accent);
             width: 100%;
             max-width: 1100px;
         }
 
         .player-header .avatar {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
-            background: #0f3460;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff5500;
+            background: var(--bg-tertiary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: var(--accent);
         }
 
-        .player-header .info h2 {
-            font-size: 1.3rem;
-            color: #fff;
-        }
+        .player-header .info h2 { font-size: 1.3rem; color: var(--text-heading); }
+        .player-header .info .elo { color: var(--accent); font-weight: 600; }
+        .player-header .info .level { color: var(--text-secondary); margin-left: 0.75rem; }
 
-        .player-header .info .elo {
-            color: #ff5500;
-            font-weight: 600;
-        }
-
-        .player-header .info .level {
-            color: #888;
-            margin-left: 0.75rem;
-        }
-
-        /* Match table */
-        .table-container {
+        /* ── Stats Cards ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             width: 100%;
             max-width: 1100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--card-shadow);
+            transition: transform 0.15s, background 0.3s;
+        }
+
+        .stat-card:hover { transform: translateY(-2px); }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Best/Worst Highlights ─── */
+        .highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px var(--card-shadow);
+            transition: background 0.3s;
+        }
+
+        .highlight-card.best { border-left: 4px solid #4caf50; }
+        .highlight-card.worst { border-left: 4px solid #f44336; }
+
+        .highlight-card h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-card.best h4 { color: #4caf50; }
+        .highlight-card.worst h4 { color: #f44336; }
+
+        .highlight-card .hl-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .highlight-card .hl-stats span { color: var(--text-secondary); }
+        .highlight-card .hl-stats strong { color: var(--text-heading); }
+
+        /* ── Charts ─── */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px var(--card-shadow);
+            transition: background 0.3s;
+        }
+
+        .chart-container h3 {
+            color: var(--text-heading);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .chart-container canvas { max-height: 250px; }
+
+        .chart-container.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ── Match table ─── */
+        .table-container {
+            width: 100%; max-width: 1100px;
             overflow-x: auto;
             border-radius: 12px;
-            background: #16213e;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: var(--bg-secondary);
+            box-shadow: 0 4px 20px var(--card-shadow);
+            transition: background 0.3s;
         }
 
         .table-container h3 {
             padding: 1rem 1.5rem 0.5rem;
-            color: #fff;
+            color: var(--text-heading);
             font-size: 1.1rem;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 
         thead th {
-            background: #0f3460;
-            color: #ccc;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
             padding: 0.75rem 1rem;
             text-align: left;
             font-weight: 600;
@@ -190,164 +323,69 @@
         }
 
         tbody tr {
-            border-bottom: 1px solid #1a1a3e;
+            border-bottom: 1px solid var(--border-row);
             transition: background 0.15s;
         }
 
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
+        tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+        tbody td { padding: 0.7rem 1rem; white-space: nowrap; }
 
-        tbody td {
-            padding: 0.7rem 1rem;
-            white-space: nowrap;
-        }
+        tr.win { background: var(--win-bg); }
+        tr.loss { background: var(--loss-bg); }
+        tr.win:hover { background: var(--win-bg-hover); }
+        tr.loss:hover { background: var(--loss-bg-hover); }
 
-        /* Win/Loss row coloring */
-        tr.win {
-            background: rgba(76, 175, 80, 0.08);
-        }
-
-        tr.loss {
-            background: rgba(244, 67, 54, 0.08);
-        }
-
-        tr.win:hover {
-            background: rgba(76, 175, 80, 0.14);
-        }
-
-        tr.loss:hover {
-            background: rgba(244, 67, 54, 0.14);
-        }
-
-        /* Result badge */
         .result {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            min-width: 36px;
-            text-align: center;
+            display: inline-block; padding: 0.2rem 0.6rem;
+            border-radius: 4px; font-weight: 700; font-size: 0.8rem;
+            min-width: 36px; text-align: center;
         }
 
-        .result-win {
-            background: #1b5e20;
-            color: #4caf50;
-        }
+        .result-win { background: #1b5e20; color: #4caf50; }
+        .result-loss { background: #b71c1c33; color: #f44336; }
+        .kd-positive { color: #4caf50; font-weight: 600; }
+        .kd-negative { color: #f44336; font-weight: 600; }
+        .kd-neutral { color: #ffc107; font-weight: 600; }
+        .map-name { color: #90caf9; font-weight: 500; }
+        .score { font-weight: 600; }
 
-        .result-loss {
-            background: #b71c1c33;
-            color: #f44336;
-        }
-
-        /* KD coloring */
-        .kd-positive {
-            color: #4caf50;
-            font-weight: 600;
-        }
-
-        .kd-negative {
-            color: #f44336;
-            font-weight: 600;
-        }
-
-        .kd-neutral {
-            color: #ffc107;
-            font-weight: 600;
-        }
-
-        /* Map name styling */
-        .map-name {
-            color: #90caf9;
-            font-weight: 500;
-        }
-
-        /* Score styling */
-        .score {
-            font-weight: 600;
-        }
-
-        /* Loading spinner */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-        }
+        /* ── Loading / Error ─── */
+        .loading { text-align: center; padding: 3rem; }
 
         .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #333;
-            border-top: 4px solid #ff5500;
+            display: inline-block; width: 40px; height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 1rem;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .loading p {
-            color: #888;
-        }
+        .loading p { color: var(--text-secondary); }
 
-        /* Error message */
-        .error {
-            text-align: center;
-            padding: 2rem;
-            color: #f44336;
-        }
+        .error { text-align: center; padding: 2rem; color: #f44336; }
+        .error h3 { margin-bottom: 0.5rem; }
+        .error p { color: var(--text-secondary); }
 
-        .error h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .error p {
-            color: #888;
-        }
-
-        /* Match count selector */
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            width: 100%;
-            max-width: 1100px;
-        }
-
-        .controls label {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .controls select {
-            padding: 0.4rem 0.75rem;
-            border: 2px solid #333;
-            border-radius: 6px;
-            background: #16213e;
-            color: #e0e0e0;
-            font-size: 0.9rem;
-        }
-
-        .controls select:focus {
-            outline: none;
-            border-color: #ff5500;
-        }
-
-        /* Responsive */
+        /* ── Responsive ─── */
         @media (max-width: 768px) {
             body { padding: 1rem; }
             h1 { font-size: 1.5rem; }
             .search-bar input { width: 180px; }
             .player-header { flex-direction: column; text-align: center; }
+            .highlights { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
-    <h1>FACEIT CS2 Stats Tracker</h1>
+    <div class="header">
+        <h1>FACEIT CS2 Stats Tracker</h1>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+    </div>
     <p class="subtitle">Track your recent match performance</p>
 
     <div class="search-bar">
@@ -369,12 +407,30 @@
     </div>
 
     <script>
+        // ── Theme Toggle ────────────────────────────────────────
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('faceit-theme', next);
+            document.getElementById('themeToggle').innerHTML = next === 'dark' ? '&#9790;' : '&#9728;';
+            // Redraw charts if they exist
+            if (window.kdChart) updateChartColors();
+            if (window.mapChart) updateChartColors();
+        }
+
+        // Load saved theme
+        (function() {
+            const saved = localStorage.getItem('faceit-theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+                document.getElementById('themeToggle').innerHTML = saved === 'dark' ? '&#9790;' : '&#9728;';
+            }
+        })();
+
         // ── Sample Data ─────────────────────────────────────────
-        const SAMPLE_PLAYER = {
-            nickname: 'SamplePlayer',
-            elo: 1847,
-            level: 7
-        };
+        const SAMPLE_PLAYER = { nickname: 'SamplePlayer', elo: 1847, level: 7 };
 
         const SAMPLE_MATCHES = [
             { date: '2026-02-10', map: 'de_mirage', result: 'win', score: '13 / 8', kills: 24, deaths: 15, assists: 5, headshots: 12, hsPercent: 50, kdRatio: 1.60, rounds: 21, mvps: 4, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
@@ -408,14 +464,10 @@
 
         async function getPlayerByNickname(nickname, apiKey) {
             const data = await fetchFromAPI(
-                API_BASE + '/players?nickname=' + encodeURIComponent(nickname),
-                apiKey
+                API_BASE + '/players?nickname=' + encodeURIComponent(nickname), apiKey
             );
-            // CS2 data lives under games.cs2
             const cs2 = data.games?.cs2;
-            if (!cs2) {
-                throw new Error('Player "' + nickname + '" has no CS2 data on FACEIT');
-            }
+            if (!cs2) throw new Error('Player "' + nickname + '" has no CS2 data on FACEIT');
             return {
                 player_id: data.player_id,
                 nickname: data.nickname,
@@ -426,10 +478,8 @@
         }
 
         async function getPlayerMatchStats(playerId, apiKey, limit) {
-            // Single endpoint that returns per-match stats — no need to call per match
             const data = await fetchFromAPI(
-                API_BASE + '/players/' + playerId + '/games/cs2/stats?limit=' + limit,
-                apiKey
+                API_BASE + '/players/' + playerId + '/games/cs2/stats?limit=' + limit, apiKey
             );
             return data.items || [];
         }
@@ -438,7 +488,6 @@
             const player = await getPlayerByNickname(nickname, apiKey);
             const items = await getPlayerMatchStats(player.player_id, apiKey, limit);
 
-            // Log first match to help debug field names
             if (items.length > 0) {
                 console.log('FACEIT match stats fields:', Object.keys(items[0].stats));
                 console.log('First match raw data:', items[0].stats);
@@ -447,24 +496,13 @@
             const matches = items.map(item => {
                 const s = item.stats;
                 const won = s['Result'] === '1';
-
-                // Parse date from "Match Finished At" (millisecond timestamp) or "Created At"
                 const timestamp = parseInt(s['Match Finished At'] || s['Created At'] || '0');
-                const date = timestamp > 0
-                    ? new Date(timestamp).toISOString().split('T')[0]
-                    : 'Unknown';
-
-                // Map name: remove "de_" prefix if present
+                const date = timestamp > 0 ? new Date(timestamp).toISOString().split('T')[0] : 'Unknown';
                 const rawMap = s['Map'] || s['i1'] || 'Unknown';
-
-                // Score: use "Final Score" or "Score" field
                 const score = s['Final Score'] || s['Score'] || '-';
 
                 return {
-                    date,
-                    map: rawMap,
-                    result: won ? 'win' : 'loss',
-                    score,
+                    date, map: rawMap, result: won ? 'win' : 'loss', score,
                     kills: parseInt(s['Kills']) || 0,
                     deaths: parseInt(s['Deaths']) || 0,
                     assists: parseInt(s['Assists']) || 0,
@@ -482,12 +520,61 @@
             return { player, matches };
         }
 
+        // ── Stats Calculation ───────────────────────────────────
+        function calcStats(matches) {
+            const total = matches.length;
+            if (total === 0) return null;
+            const wins = matches.filter(m => m.result === 'win').length;
+            const totalKills = matches.reduce((s, m) => s + m.kills, 0);
+            const totalDeaths = matches.reduce((s, m) => s + m.deaths, 0);
+            const totalAssists = matches.reduce((s, m) => s + m.assists, 0);
+            const totalHS = matches.reduce((s, m) => s + m.headshots, 0);
+            const avgHsPercent = matches.reduce((s, m) => s + (m.hsPercent || 0), 0) / total;
+            const totalMVPs = matches.reduce((s, m) => s + (m.mvps || 0), 0);
+
+            return {
+                matches: total,
+                wins,
+                losses: total - wins,
+                winRate: ((wins / total) * 100).toFixed(0),
+                avgKills: (totalKills / total).toFixed(1),
+                avgDeaths: (totalDeaths / total).toFixed(1),
+                avgAssists: (totalAssists / total).toFixed(1),
+                overallKD: totalDeaths > 0 ? (totalKills / totalDeaths).toFixed(2) : totalKills.toFixed(2),
+                avgHsPercent: avgHsPercent.toFixed(0),
+                totalMVPs,
+            };
+        }
+
+        function findBestWorst(matches) {
+            if (matches.length === 0) return { best: null, worst: null };
+            let best = matches[0], worst = matches[0];
+            for (const m of matches) {
+                const kd = m.kdRatio > 0 ? m.kdRatio : (m.deaths > 0 ? m.kills / m.deaths : m.kills);
+                const bestKd = best.kdRatio > 0 ? best.kdRatio : (best.deaths > 0 ? best.kills / best.deaths : best.kills);
+                const worstKd = worst.kdRatio > 0 ? worst.kdRatio : (worst.deaths > 0 ? worst.kills / worst.deaths : worst.kills);
+                if (kd > bestKd) best = m;
+                if (kd < worstKd) worst = m;
+            }
+            return { best, worst };
+        }
+
+        function getMapStats(matches) {
+            const maps = {};
+            for (const m of matches) {
+                const name = cleanMapName(m.map);
+                if (!maps[name]) maps[name] = { played: 0, wins: 0 };
+                maps[name].played++;
+                if (m.result === 'win') maps[name].wins++;
+            }
+            return maps;
+        }
+
         // ── Rendering ───────────────────────────────────────────
         function renderPlayerHeader(player, isLive) {
             const initial = player.nickname.charAt(0).toUpperCase();
             const badgeClass = isLive ? 'badge-live' : 'badge-sample';
             const badgeText = isLive ? 'LIVE DATA' : 'SAMPLE DATA';
-
             return `
                 <div class="data-source">
                     <span class="badge ${badgeClass}">${badgeText}</span>
@@ -499,8 +586,209 @@
                         <span class="elo">ELO: ${player.elo}</span>
                         <span class="level">Level ${player.level}</span>
                     </div>
-                </div>
-            `;
+                </div>`;
+        }
+
+        function renderStatsCards(stats) {
+            if (!stats) return '';
+            const kdColor = parseFloat(stats.overallKD) >= 1 ? '#4caf50' : '#f44336';
+            const wrColor = parseInt(stats.winRate) >= 50 ? '#4caf50' : '#f44336';
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${stats.matches}</div>
+                        <div class="stat-label">Matches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color:${wrColor}">${stats.winRate}%</div>
+                        <div class="stat-label">Win Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color:${kdColor}">${stats.overallKD}</div>
+                        <div class="stat-label">K/D Ratio</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${stats.avgKills}</div>
+                        <div class="stat-label">Avg Kills</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${stats.avgDeaths}</div>
+                        <div class="stat-label">Avg Deaths</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${stats.avgHsPercent}%</div>
+                        <div class="stat-label">Avg HS%</div>
+                    </div>
+                </div>`;
+        }
+
+        function renderHighlights(matches) {
+            const { best, worst } = findBestWorst(matches);
+            if (!best || !worst) return '';
+
+            function hlCard(m, type) {
+                const kd = m.kdRatio > 0 ? m.kdRatio.toFixed(2) : (m.deaths > 0 ? (m.kills / m.deaths).toFixed(2) : m.kills.toFixed(2));
+                const label = type === 'best' ? 'Best Match' : 'Worst Match';
+                return `
+                    <div class="highlight-card ${type}">
+                        <h4>${label}</h4>
+                        <div class="hl-stats">
+                            <div><span>Map:</span> <strong>${escapeHtml(cleanMapName(m.map))}</strong></div>
+                            <div><span>Score:</span> <strong>${escapeHtml(String(m.score))}</strong></div>
+                            <div><span>K/D/A:</span> <strong>${m.kills}/${m.deaths}/${m.assists}</strong></div>
+                            <div><span>K/D:</span> <strong>${kd}</strong></div>
+                            <div><span>Date:</span> <strong>${m.date}</strong></div>
+                        </div>
+                    </div>`;
+            }
+
+            return `<div class="highlights">${hlCard(best, 'best')}${hlCard(worst, 'worst')}</div>`;
+        }
+
+        function renderCharts(matches) {
+            return `
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>K/D Ratio Trend</h3>
+                        <canvas id="kdChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Map Breakdown</h3>
+                        <canvas id="mapChart"></canvas>
+                    </div>
+                </div>`;
+        }
+
+        function initCharts(matches) {
+            // Destroy existing charts
+            if (window.kdChart) { window.kdChart.destroy(); window.kdChart = null; }
+            if (window.mapChart) { window.mapChart.destroy(); window.mapChart = null; }
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+            const textColor = isDark ? '#aaa' : '#555';
+
+            // K/D Trend Chart
+            const reversed = [...matches].reverse();
+            const kdData = reversed.map(m =>
+                m.kdRatio > 0 ? m.kdRatio : (m.deaths > 0 ? m.kills / m.deaths : m.kills)
+            );
+            const kdLabels = reversed.map((m, i) => `#${i + 1}`);
+            const kdColors = kdData.map(v => v >= 1 ? '#4caf50' : '#f44336');
+
+            const kdCtx = document.getElementById('kdChart');
+            if (kdCtx) {
+                window.kdChart = new Chart(kdCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: kdLabels,
+                        datasets: [{
+                            label: 'K/D Ratio',
+                            data: kdData,
+                            backgroundColor: kdColors,
+                            borderRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            annotation: undefined,
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: gridColor },
+                                ticks: { color: textColor },
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: textColor },
+                            }
+                        }
+                    },
+                    plugins: [{
+                        id: 'kdLine',
+                        afterDraw(chart) {
+                            const yScale = chart.scales.y;
+                            const y = yScale.getPixelForValue(1);
+                            const ctx = chart.ctx;
+                            ctx.save();
+                            ctx.strokeStyle = '#ffc107';
+                            ctx.lineWidth = 2;
+                            ctx.setLineDash([6, 4]);
+                            ctx.beginPath();
+                            ctx.moveTo(chart.chartArea.left, y);
+                            ctx.lineTo(chart.chartArea.right, y);
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    }]
+                });
+            }
+
+            // Map Breakdown Chart
+            const mapStats = getMapStats(matches);
+            const mapNames = Object.keys(mapStats);
+            const mapPlayed = mapNames.map(n => mapStats[n].played);
+            const mapWins = mapNames.map(n => mapStats[n].wins);
+            const mapLosses = mapNames.map(n => mapStats[n].played - mapStats[n].wins);
+
+            const mapCtx = document.getElementById('mapChart');
+            if (mapCtx) {
+                window.mapChart = new Chart(mapCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: mapNames,
+                        datasets: [
+                            {
+                                label: 'Wins',
+                                data: mapWins,
+                                backgroundColor: '#4caf50',
+                                borderRadius: 4,
+                            },
+                            {
+                                label: 'Losses',
+                                data: mapLosses,
+                                backgroundColor: '#f44336',
+                                borderRadius: 4,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: textColor }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1, color: textColor },
+                                grid: { color: gridColor },
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: textColor },
+                                stacked: true,
+                            },
+                            y: {
+                                stacked: true,
+                                grid: { color: gridColor },
+                                ticks: { stepSize: 1, color: textColor },
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateChartColors() {
+            // Re-render charts with correct theme colors
+            if (window.lastMatches) {
+                initCharts(window.lastMatches);
+            }
         }
 
         function renderMatchTable(matches) {
@@ -510,18 +798,14 @@
 
             let rows = '';
             for (const m of matches) {
-                // Use API-provided K/D ratio if available, otherwise calculate
                 const kd = m.kdRatio > 0
                     ? m.kdRatio.toFixed(2)
                     : (m.deaths === 0 ? m.kills.toFixed(2) : (m.kills / m.deaths).toFixed(2));
                 const kdNum = parseFloat(kd);
                 const kdClass = kdNum > 1 ? 'kd-positive' : kdNum < 1 ? 'kd-negative' : 'kd-neutral';
-
-                // Use API-provided HS% if available, otherwise calculate
                 const hsPercent = m.hsPercent > 0
                     ? Math.round(m.hsPercent)
                     : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0);
-
                 const resultClass = m.result === 'win' ? 'result-win' : 'result-loss';
                 const rowClass = m.result === 'win' ? 'win' : 'loss';
 
@@ -536,8 +820,7 @@
                         <td>${m.assists}</td>
                         <td class="${kdClass}">${kd}</td>
                         <td>${hsPercent}%</td>
-                    </tr>
-                `;
+                    </tr>`;
             }
 
             return `
@@ -557,12 +840,9 @@
                                 <th>HS%</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            ${rows}
-                        </tbody>
+                        <tbody>${rows}</tbody>
                     </table>
-                </div>
-            `;
+                </div>`;
         }
 
         // ── Helpers ─────────────────────────────────────────────
@@ -584,40 +864,42 @@
             const content = document.getElementById('content');
             const btn = document.getElementById('fetchBtn');
 
-            if (!username) {
-                alert('Please enter a FACEIT username');
-                return;
-            }
+            if (!username) { alert('Please enter a FACEIT username'); return; }
 
-            // Show loading
             btn.disabled = true;
             btn.textContent = 'Loading...';
             content.innerHTML = `
                 <div class="loading">
                     <div class="spinner"></div>
                     <p>Fetching stats for ${escapeHtml(username)}...</p>
-                </div>
-            `;
+                </div>`;
 
             try {
                 let player, matches, isLive;
 
                 if (apiKey) {
-                    // Fetch live data from FACEIT API
                     const data = await fetchLiveData(username, apiKey, limit);
                     player = data.player;
                     matches = data.matches;
                     isLive = true;
                 } else {
-                    // Use sample data
                     player = { ...SAMPLE_PLAYER, nickname: username };
                     matches = SAMPLE_MATCHES.slice(0, limit);
                     isLive = false;
                 }
 
+                window.lastMatches = matches;
+                const stats = calcStats(matches);
+
                 content.innerHTML =
                     renderPlayerHeader(player, isLive) +
+                    renderStatsCards(stats) +
+                    renderHighlights(matches) +
+                    renderCharts(matches) +
                     renderMatchTable(matches);
+
+                // Init charts after DOM is updated
+                setTimeout(() => initCharts(matches), 50);
 
             } catch (err) {
                 content.innerHTML = `
@@ -626,10 +908,9 @@
                         <p>${escapeHtml(err.message)}</p>
                         <p style="margin-top: 0.5rem; font-size: 0.85rem;">
                             Try without an API key to see sample data, or check your key at
-                            <a href="https://developers.faceit.com" target="_blank" style="color: #ff5500;">developers.faceit.com</a>
+                            <a href="https://developers.faceit.com" target="_blank" style="color: var(--accent);">developers.faceit.com</a>
                         </p>
-                    </div>
-                `;
+                    </div>`;
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Fetch Stats';
