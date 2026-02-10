@@ -377,16 +377,16 @@
         };
 
         const SAMPLE_MATCHES = [
-            { date: '2026-02-10', map: 'Mirage', result: 'win', score: '13-8', kills: 24, deaths: 15, assists: 5, headshots: 12, elo: 1847 },
-            { date: '2026-02-09', map: 'Inferno', result: 'loss', score: '11-13', kills: 18, deaths: 20, assists: 7, headshots: 8, elo: 1822 },
-            { date: '2026-02-09', map: 'Anubis', result: 'win', score: '13-6', kills: 28, deaths: 11, assists: 3, headshots: 16, elo: 1848 },
-            { date: '2026-02-08', map: 'Dust2', result: 'win', score: '13-10', kills: 21, deaths: 17, assists: 4, headshots: 10, elo: 1823 },
-            { date: '2026-02-08', map: 'Nuke', result: 'loss', score: '9-13', kills: 14, deaths: 19, assists: 6, headshots: 5, elo: 1798 },
-            { date: '2026-02-07', map: 'Ancient', result: 'win', score: '13-11', kills: 22, deaths: 18, assists: 8, headshots: 11, elo: 1823 },
-            { date: '2026-02-07', map: 'Mirage', result: 'loss', score: '10-13', kills: 16, deaths: 21, assists: 3, headshots: 7, elo: 1798 },
-            { date: '2026-02-06', map: 'Inferno', result: 'win', score: '13-5', kills: 26, deaths: 10, assists: 4, headshots: 14, elo: 1823 },
-            { date: '2026-02-06', map: 'Vertigo', result: 'loss', score: '7-13', kills: 12, deaths: 22, assists: 5, headshots: 4, elo: 1795 },
-            { date: '2026-02-05', map: 'Anubis', result: 'win', score: '13-9', kills: 20, deaths: 14, assists: 6, headshots: 9, elo: 1820 },
+            { date: '2026-02-10', map: 'de_mirage', result: 'win', score: '13 / 8', kills: 24, deaths: 15, assists: 5, headshots: 12, hsPercent: 50, kdRatio: 1.60, rounds: 21, mvps: 4, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-09', map: 'de_inferno', result: 'loss', score: '11 / 13', kills: 18, deaths: 20, assists: 7, headshots: 8, hsPercent: 44, kdRatio: 0.90, rounds: 24, mvps: 2, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-09', map: 'de_anubis', result: 'win', score: '13 / 6', kills: 28, deaths: 11, assists: 3, headshots: 16, hsPercent: 57, kdRatio: 2.55, rounds: 19, mvps: 6, tripleKills: 3, quadroKills: 1, pentaKills: 0 },
+            { date: '2026-02-08', map: 'de_dust2', result: 'win', score: '13 / 10', kills: 21, deaths: 17, assists: 4, headshots: 10, hsPercent: 48, kdRatio: 1.24, rounds: 23, mvps: 3, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-08', map: 'de_nuke', result: 'loss', score: '9 / 13', kills: 14, deaths: 19, assists: 6, headshots: 5, hsPercent: 36, kdRatio: 0.74, rounds: 22, mvps: 1, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-07', map: 'de_ancient', result: 'win', score: '13 / 11', kills: 22, deaths: 18, assists: 8, headshots: 11, hsPercent: 50, kdRatio: 1.22, rounds: 24, mvps: 3, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-07', map: 'de_mirage', result: 'loss', score: '10 / 13', kills: 16, deaths: 21, assists: 3, headshots: 7, hsPercent: 44, kdRatio: 0.76, rounds: 23, mvps: 2, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-06', map: 'de_inferno', result: 'win', score: '13 / 5', kills: 26, deaths: 10, assists: 4, headshots: 14, hsPercent: 54, kdRatio: 2.60, rounds: 18, mvps: 5, tripleKills: 2, quadroKills: 1, pentaKills: 0 },
+            { date: '2026-02-06', map: 'de_vertigo', result: 'loss', score: '7 / 13', kills: 12, deaths: 22, assists: 5, headshots: 4, hsPercent: 33, kdRatio: 0.55, rounds: 20, mvps: 1, tripleKills: 0, quadroKills: 0, pentaKills: 0 },
+            { date: '2026-02-05', map: 'de_anubis', result: 'win', score: '13 / 9', kills: 20, deaths: 14, assists: 6, headshots: 9, hsPercent: 45, kdRatio: 1.43, rounds: 22, mvps: 3, tripleKills: 1, quadroKills: 0, pentaKills: 0 },
         ];
 
         // ── FACEIT API ──────────────────────────────────────────
@@ -407,75 +407,77 @@
         }
 
         async function getPlayerByNickname(nickname, apiKey) {
-            const data = await fetchFromAPI(API_BASE + '/players?nickname=' + encodeURIComponent(nickname), apiKey);
+            const data = await fetchFromAPI(
+                API_BASE + '/players?nickname=' + encodeURIComponent(nickname),
+                apiKey
+            );
+            // CS2 data lives under games.cs2
+            const cs2 = data.games?.cs2;
+            if (!cs2) {
+                throw new Error('Player "' + nickname + '" has no CS2 data on FACEIT');
+            }
             return {
                 player_id: data.player_id,
                 nickname: data.nickname,
                 avatar: data.avatar,
-                elo: data.games?.cs2?.faceit_elo || data.games?.csgo?.faceit_elo || 0,
-                level: data.games?.cs2?.skill_level || data.games?.csgo?.skill_level || 0
+                elo: cs2.faceit_elo || 0,
+                level: cs2.skill_level || 0
             };
         }
 
-        async function getMatchHistory(playerId, apiKey, limit) {
+        async function getPlayerMatchStats(playerId, apiKey, limit) {
+            // Single endpoint that returns per-match stats — no need to call per match
             const data = await fetchFromAPI(
-                API_BASE + '/players/' + playerId + '/history?game=cs2&offset=0&limit=' + limit,
+                API_BASE + '/players/' + playerId + '/games/cs2/stats?limit=' + limit,
                 apiKey
             );
             return data.items || [];
         }
 
-        async function getMatchStats(matchId, apiKey) {
-            const data = await fetchFromAPI(API_BASE + '/matches/' + matchId + '/stats', apiKey);
-            return data.rounds?.[0] || null;
-        }
-
-        function findPlayerStats(matchStats, playerId) {
-            if (!matchStats?.teams) return null;
-            for (const team of matchStats.teams) {
-                for (const player of team.players) {
-                    if (player.player_id === playerId) {
-                        return {
-                            stats: player.player_stats,
-                            teamId: team.team_id,
-                            teamStats: team.team_stats
-                        };
-                    }
-                }
-            }
-            return null;
-        }
-
         async function fetchLiveData(nickname, apiKey, limit) {
             const player = await getPlayerByNickname(nickname, apiKey);
-            const history = await getMatchHistory(player.player_id, apiKey, limit);
+            const items = await getPlayerMatchStats(player.player_id, apiKey, limit);
 
-            const matches = [];
-            for (const match of history) {
-                try {
-                    const stats = await getMatchStats(match.match_id, apiKey);
-                    const playerData = findPlayerStats(stats, player.player_id);
-                    if (!playerData) continue;
-
-                    const s = playerData.stats;
-                    const won = playerData.teamStats?.['Team Win'] === '1' ||
-                                s?.Result === '1';
-
-                    matches.push({
-                        date: new Date(match.started_at * 1000).toISOString().split('T')[0],
-                        map: stats.round_stats?.Map || match.competition_name || 'Unknown',
-                        result: won ? 'win' : 'loss',
-                        score: stats.round_stats?.Score || '-',
-                        kills: parseInt(s?.Kills) || 0,
-                        deaths: parseInt(s?.Deaths) || 0,
-                        assists: parseInt(s?.Assists) || 0,
-                        headshots: parseInt(s?.Headshots) || 0,
-                        elo: player.elo
-                    });
-                } catch {
-                    // Skip matches where stats aren't available
-                }
+            // Log first match to help debug field names
+            if (items.length > 0) {
+                console.log('FACEIT match stats fields:', Object.keys(items[0].stats));
+                console.log('First match raw data:', items[0].stats);
             }
+
+            const matches = items.map(item => {
+                const s = item.stats;
+                const won = s['Result'] === '1';
+
+                // Parse date from "Match Finished At" (millisecond timestamp) or "Created At"
+                const timestamp = parseInt(s['Match Finished At'] || s['Created At'] || '0');
+                const date = timestamp > 0
+                    ? new Date(timestamp).toISOString().split('T')[0]
+                    : 'Unknown';
+
+                // Map name: remove "de_" prefix if present
+                const rawMap = s['Map'] || s['i1'] || 'Unknown';
+
+                // Score: use "Final Score" or "Score" field
+                const score = s['Final Score'] || s['Score'] || '-';
+
+                return {
+                    date,
+                    map: rawMap,
+                    result: won ? 'win' : 'loss',
+                    score,
+                    kills: parseInt(s['Kills']) || 0,
+                    deaths: parseInt(s['Deaths']) || 0,
+                    assists: parseInt(s['Assists']) || 0,
+                    headshots: parseInt(s['Headshots']) || 0,
+                    hsPercent: parseFloat(s['Headshots %']) || 0,
+                    kdRatio: parseFloat(s['K/D Ratio']) || 0,
+                    rounds: parseInt(s['Rounds']) || 0,
+                    mvps: parseInt(s['MVPs']) || 0,
+                    tripleKills: parseInt(s['Triple Kills']) || 0,
+                    quadroKills: parseInt(s['Quadro Kills']) || 0,
+                    pentaKills: parseInt(s['Penta Kills']) || 0,
+                };
+            });
 
             return { player, matches };
         }
@@ -508,10 +510,18 @@
 
             let rows = '';
             for (const m of matches) {
-                const kd = m.deaths === 0 ? m.kills.toFixed(2) : (m.kills / m.deaths).toFixed(2);
+                // Use API-provided K/D ratio if available, otherwise calculate
+                const kd = m.kdRatio > 0
+                    ? m.kdRatio.toFixed(2)
+                    : (m.deaths === 0 ? m.kills.toFixed(2) : (m.kills / m.deaths).toFixed(2));
                 const kdNum = parseFloat(kd);
                 const kdClass = kdNum > 1 ? 'kd-positive' : kdNum < 1 ? 'kd-negative' : 'kd-neutral';
-                const hsPercent = (m.kills > 0 ? (m.headshots / m.kills * 100) : 0).toFixed(0);
+
+                // Use API-provided HS% if available, otherwise calculate
+                const hsPercent = m.hsPercent > 0
+                    ? Math.round(m.hsPercent)
+                    : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0);
+
                 const resultClass = m.result === 'win' ? 'result-win' : 'result-loss';
                 const rowClass = m.result === 'win' ? 'win' : 'loss';
 
@@ -520,7 +530,7 @@
                         <td>${m.date}</td>
                         <td class="map-name">${escapeHtml(cleanMapName(m.map))}</td>
                         <td><span class="result ${resultClass}">${m.result === 'win' ? 'W' : 'L'}</span></td>
-                        <td class="score">${escapeHtml(m.score)}</td>
+                        <td class="score">${escapeHtml(String(m.score))}</td>
                         <td>${m.kills}</td>
                         <td>${m.deaths}</td>
                         <td>${m.assists}</td>
