@@ -69,7 +69,6 @@
         }
 
         h1 { font-size: 2rem; color: var(--accent); }
-
         .subtitle { color: var(--text-secondary); margin-bottom: 2rem; }
 
         /* ── Theme Toggle ─── */
@@ -81,13 +80,10 @@
             background: var(--bg-secondary);
             border: 2px solid var(--border-color);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             cursor: pointer;
             font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: all 0.3s;
         }
 
@@ -98,11 +94,8 @@
 
         /* ── Search Bar ─── */
         .search-bar {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 0.5rem; margin-bottom: 2rem;
+            flex-wrap: wrap; justify-content: center;
         }
 
         .search-bar input, .search-bar select {
@@ -118,20 +111,14 @@
         .search-bar input { width: 220px; }
 
         .search-bar input:focus, .search-bar select:focus {
-            outline: none;
-            border-color: var(--accent);
+            outline: none; border-color: var(--accent);
         }
 
         .search-bar button {
             padding: 0.75rem 1.5rem;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
+            background: var(--accent); color: white; border: none;
+            border-radius: 8px; font-size: 1rem; cursor: pointer;
+            font-weight: bold; transition: background 0.2s;
         }
 
         .search-bar button:hover { background: var(--accent-hover); }
@@ -139,44 +126,31 @@
 
         /* ── Placeholder ─── */
         .placeholder {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 4rem;
-            font-size: 1.2rem;
+            text-align: center; color: var(--text-secondary);
+            margin-top: 4rem; font-size: 1.2rem;
         }
-
         .placeholder p { margin: 0.5rem 0; }
 
         /* ── Data source badge ─── */
         .data-source { text-align: center; margin-bottom: 1rem; font-size: 0.85rem; }
-
         .data-source .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-weight: 600;
+            display: inline-block; padding: 0.25rem 0.75rem;
+            border-radius: 12px; font-weight: 600;
         }
-
         .badge-sample { background: #3d2e00; color: #ffc107; }
         .badge-live { background: #003d1a; color: #4caf50; }
 
         /* ── Player header ─── */
         .player-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem 1.5rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem; padding: 1rem 1.5rem;
+            background: var(--bg-secondary); border-radius: 12px;
             border-left: 4px solid var(--accent);
-            width: 100%;
-            max-width: 1100px;
+            width: 100%; max-width: 1100px;
         }
 
         .player-header .avatar {
-            width: 48px; height: 48px;
-            border-radius: 50%;
+            width: 48px; height: 48px; border-radius: 50%;
             background: var(--bg-tertiary);
             display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; font-weight: bold; color: var(--accent);
@@ -189,18 +163,13 @@
         /* ── Stats Cards ─── */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            width: 100%;
-            max-width: 1100px;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.75rem; width: 100%; max-width: 1100px; margin-bottom: 1.5rem;
         }
 
         .stat-card {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            text-align: center;
+            background: var(--bg-secondary); border-radius: 12px;
+            padding: 1rem; text-align: center;
             box-shadow: 0 2px 10px var(--card-shadow);
             transition: transform 0.15s, background 0.3s;
         }
@@ -208,32 +177,23 @@
         .stat-card:hover { transform: translateY(-2px); }
 
         .stat-card .stat-value {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            margin-bottom: 0.25rem;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--text-heading); margin-bottom: 0.2rem;
         }
 
         .stat-card .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.7rem; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        /* ── Best/Worst Highlights ─── */
+        /* ── Highlights ─── */
         .highlights {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            width: 100%;
-            max-width: 1100px;
-            margin-bottom: 1.5rem;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1rem; width: 100%; max-width: 1100px; margin-bottom: 1.5rem;
         }
 
         .highlight-card {
-            background: var(--bg-secondary);
-            border-radius: 12px;
+            background: var(--bg-secondary); border-radius: 12px;
             padding: 1rem 1.5rem;
             box-shadow: 0 2px 10px var(--card-shadow);
             transition: background 0.3s;
@@ -243,83 +203,124 @@
         .highlight-card.worst { border-left: 4px solid #f44336; }
 
         .highlight-card h4 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 0.5rem;
         }
 
         .highlight-card.best h4 { color: #4caf50; }
         .highlight-card.worst h4 { color: #f44336; }
 
         .highlight-card .hl-stats {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
+            display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.9rem;
         }
 
         .highlight-card .hl-stats span { color: var(--text-secondary); }
         .highlight-card .hl-stats strong { color: var(--text-heading); }
 
+        /* ── Win Streak ─── */
+        .streak-bar {
+            display: flex; gap: 0.35rem; width: 100%; max-width: 1100px;
+            margin-bottom: 1.5rem; justify-content: center; flex-wrap: wrap;
+        }
+
+        .streak-dot {
+            width: 36px; height: 36px; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.75rem; color: white;
+        }
+
+        .streak-dot.w { background: #2e7d32; }
+        .streak-dot.l { background: #c62828; }
+
+        .streak-info {
+            width: 100%; max-width: 1100px; text-align: center;
+            margin-bottom: 1.5rem; font-size: 0.85rem;
+        }
+
+        .streak-info span { margin: 0 1rem; }
+        .streak-label { color: var(--text-secondary); }
+        .streak-value { color: var(--text-heading); font-weight: 600; }
+        .streak-value.positive { color: #4caf50; }
+        .streak-value.negative { color: #f44336; }
+
         /* ── Charts ─── */
         .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            width: 100%;
-            max-width: 1100px;
-            margin-bottom: 1.5rem;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1rem; width: 100%; max-width: 1100px; margin-bottom: 1.5rem;
         }
 
         .chart-container {
-            background: var(--bg-secondary);
-            border-radius: 12px;
+            background: var(--bg-secondary); border-radius: 12px;
             padding: 1rem 1.5rem;
             box-shadow: 0 2px 10px var(--card-shadow);
             transition: background 0.3s;
         }
 
         .chart-container h3 {
-            color: var(--text-heading);
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
+            color: var(--text-heading); font-size: 1rem; margin-bottom: 0.75rem;
         }
 
         .chart-container canvas { max-height: 250px; }
+        .chart-container.full-width { grid-column: 1 / -1; }
 
-        .chart-container.full-width {
-            grid-column: 1 / -1;
+        /* ── Kill Breakdown ─── */
+        .kill-breakdown {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; width: 100%; max-width: 1100px; margin-bottom: 1.5rem;
+        }
+
+        .kill-card {
+            background: var(--bg-secondary); border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 2px 10px var(--card-shadow);
+        }
+
+        .kill-card h4 {
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .kill-bar {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 0.4rem; font-size: 0.85rem;
+        }
+
+        .kill-bar .bar-label { width: 80px; color: var(--text-secondary); }
+        .kill-bar .bar-track {
+            flex: 1; height: 18px; background: var(--bg-tertiary);
+            border-radius: 4px; overflow: hidden;
+        }
+
+        .kill-bar .bar-fill {
+            height: 100%; border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .kill-bar .bar-value {
+            width: 30px; text-align: right;
+            color: var(--text-heading); font-weight: 600;
         }
 
         /* ── Match table ─── */
         .table-container {
-            width: 100%; max-width: 1100px;
-            overflow-x: auto;
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            box-shadow: 0 4px 20px var(--card-shadow);
-            transition: background 0.3s;
+            width: 100%; max-width: 1100px; overflow-x: auto;
+            border-radius: 12px; background: var(--bg-secondary);
+            box-shadow: 0 4px 20px var(--card-shadow); transition: background 0.3s;
         }
 
         .table-container h3 {
             padding: 1rem 1.5rem 0.5rem;
-            color: var(--text-heading);
-            font-size: 1.1rem;
+            color: var(--text-heading); font-size: 1.1rem;
         }
 
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 
         thead th {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
+            background: var(--bg-tertiary); color: var(--text-secondary);
+            padding: 0.75rem 1rem; text-align: left; font-weight: 600;
+            text-transform: uppercase; font-size: 0.75rem;
+            letter-spacing: 0.5px; white-space: nowrap;
         }
 
         tbody tr {
@@ -357,14 +358,12 @@
             border: 4px solid var(--border-color);
             border-top: 4px solid var(--accent);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1rem;
+            animation: spin 0.8s linear infinite; margin-bottom: 1rem;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .loading p { color: var(--text-secondary); }
-
         .error { text-align: center; padding: 2rem; color: #f44336; }
         .error h3 { margin-bottom: 0.5rem; }
         .error p { color: var(--text-secondary); }
@@ -410,17 +409,13 @@
         // ── Theme Toggle ────────────────────────────────────────
         function toggleTheme() {
             const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', next);
             localStorage.setItem('faceit-theme', next);
             document.getElementById('themeToggle').innerHTML = next === 'dark' ? '&#9790;' : '&#9728;';
-            // Redraw charts if they exist
-            if (window.kdChart) updateChartColors();
-            if (window.mapChart) updateChartColors();
+            if (window.lastMatches) rebuildCharts(window.lastMatches);
         }
 
-        // Load saved theme
         (function() {
             const saved = localStorage.getItem('faceit-theme');
             if (saved) {
@@ -469,10 +464,8 @@
             const cs2 = data.games?.cs2;
             if (!cs2) throw new Error('Player "' + nickname + '" has no CS2 data on FACEIT');
             return {
-                player_id: data.player_id,
-                nickname: data.nickname,
-                avatar: data.avatar,
-                elo: cs2.faceit_elo || 0,
+                player_id: data.player_id, nickname: data.nickname,
+                avatar: data.avatar, elo: cs2.faceit_elo || 0,
                 level: cs2.skill_level || 0
             };
         }
@@ -489,8 +482,8 @@
             const items = await getPlayerMatchStats(player.player_id, apiKey, limit);
 
             if (items.length > 0) {
-                console.log('FACEIT match stats fields:', Object.keys(items[0].stats));
-                console.log('First match raw data:', items[0].stats);
+                console.log('FACEIT stats fields:', Object.keys(items[0].stats));
+                console.log('First match raw:', items[0].stats);
             }
 
             const matches = items.map(item => {
@@ -498,11 +491,11 @@
                 const won = s['Result'] === '1';
                 const timestamp = parseInt(s['Match Finished At'] || s['Created At'] || '0');
                 const date = timestamp > 0 ? new Date(timestamp).toISOString().split('T')[0] : 'Unknown';
-                const rawMap = s['Map'] || s['i1'] || 'Unknown';
-                const score = s['Final Score'] || s['Score'] || '-';
 
                 return {
-                    date, map: rawMap, result: won ? 'win' : 'loss', score,
+                    date, map: s['Map'] || s['i1'] || 'Unknown',
+                    result: won ? 'win' : 'loss',
+                    score: s['Final Score'] || s['Score'] || '-',
                     kills: parseInt(s['Kills']) || 0,
                     deaths: parseInt(s['Deaths']) || 0,
                     assists: parseInt(s['Assists']) || 0,
@@ -522,27 +515,38 @@
 
         // ── Stats Calculation ───────────────────────────────────
         function calcStats(matches) {
-            const total = matches.length;
-            if (total === 0) return null;
+            const n = matches.length;
+            if (n === 0) return null;
             const wins = matches.filter(m => m.result === 'win').length;
-            const totalKills = matches.reduce((s, m) => s + m.kills, 0);
-            const totalDeaths = matches.reduce((s, m) => s + m.deaths, 0);
-            const totalAssists = matches.reduce((s, m) => s + m.assists, 0);
-            const totalHS = matches.reduce((s, m) => s + m.headshots, 0);
-            const avgHsPercent = matches.reduce((s, m) => s + (m.hsPercent || 0), 0) / total;
+            const tk = matches.reduce((s, m) => s + m.kills, 0);
+            const td = matches.reduce((s, m) => s + m.deaths, 0);
+            const ta = matches.reduce((s, m) => s + m.assists, 0);
+            const avgHs = matches.reduce((s, m) => s + (m.hsPercent || 0), 0) / n;
             const totalMVPs = matches.reduce((s, m) => s + (m.mvps || 0), 0);
+            const totalTriple = matches.reduce((s, m) => s + (m.tripleKills || 0), 0);
+            const totalQuadro = matches.reduce((s, m) => s + (m.quadroKills || 0), 0);
+            const totalPenta = matches.reduce((s, m) => s + (m.pentaKills || 0), 0);
+            const totalRounds = matches.reduce((s, m) => s + (m.rounds || 0), 0);
+
+            // Current streak
+            let streak = 0;
+            const streakType = matches[0]?.result || 'win';
+            for (const m of matches) {
+                if (m.result === streakType) streak++;
+                else break;
+            }
 
             return {
-                matches: total,
-                wins,
-                losses: total - wins,
-                winRate: ((wins / total) * 100).toFixed(0),
-                avgKills: (totalKills / total).toFixed(1),
-                avgDeaths: (totalDeaths / total).toFixed(1),
-                avgAssists: (totalAssists / total).toFixed(1),
-                overallKD: totalDeaths > 0 ? (totalKills / totalDeaths).toFixed(2) : totalKills.toFixed(2),
-                avgHsPercent: avgHsPercent.toFixed(0),
-                totalMVPs,
+                matches: n, wins, losses: n - wins,
+                winRate: ((wins / n) * 100).toFixed(0),
+                avgKills: (tk / n).toFixed(1),
+                avgDeaths: (td / n).toFixed(1),
+                avgAssists: (ta / n).toFixed(1),
+                overallKD: td > 0 ? (tk / td).toFixed(2) : tk.toFixed(2),
+                avgHsPercent: avgHs.toFixed(0),
+                totalMVPs, totalTriple, totalQuadro, totalPenta,
+                killsPerRound: totalRounds > 0 ? (tk / totalRounds).toFixed(2) : '0',
+                streak, streakType,
             };
         }
 
@@ -550,13 +554,15 @@
             if (matches.length === 0) return { best: null, worst: null };
             let best = matches[0], worst = matches[0];
             for (const m of matches) {
-                const kd = m.kdRatio > 0 ? m.kdRatio : (m.deaths > 0 ? m.kills / m.deaths : m.kills);
-                const bestKd = best.kdRatio > 0 ? best.kdRatio : (best.deaths > 0 ? best.kills / best.deaths : best.kills);
-                const worstKd = worst.kdRatio > 0 ? worst.kdRatio : (worst.deaths > 0 ? worst.kills / worst.deaths : worst.kills);
-                if (kd > bestKd) best = m;
-                if (kd < worstKd) worst = m;
+                const kd = getKD(m), bkd = getKD(best), wkd = getKD(worst);
+                if (kd > bkd) best = m;
+                if (kd < wkd) worst = m;
             }
             return { best, worst };
+        }
+
+        function getKD(m) {
+            return m.kdRatio > 0 ? m.kdRatio : (m.deaths > 0 ? m.kills / m.deaths : m.kills);
         }
 
         function getMapStats(matches) {
@@ -573,16 +579,14 @@
         // ── Rendering ───────────────────────────────────────────
         function renderPlayerHeader(player, isLive) {
             const initial = player.nickname.charAt(0).toUpperCase();
-            const badgeClass = isLive ? 'badge-live' : 'badge-sample';
-            const badgeText = isLive ? 'LIVE DATA' : 'SAMPLE DATA';
+            const bc = isLive ? 'badge-live' : 'badge-sample';
+            const bt = isLive ? 'LIVE DATA' : 'SAMPLE DATA';
             return `
-                <div class="data-source">
-                    <span class="badge ${badgeClass}">${badgeText}</span>
-                </div>
+                <div class="data-source"><span class="badge ${bc}">${bt}</span></div>
                 <div class="player-header">
                     <div class="avatar">${initial}</div>
                     <div class="info">
-                        <h2>${escapeHtml(player.nickname)}</h2>
+                        <h2>${esc(player.nickname)}</h2>
                         <span class="elo">ELO: ${player.elo}</span>
                         <span class="level">Level ${player.level}</span>
                     </div>
@@ -591,61 +595,96 @@
 
         function renderStatsCards(stats) {
             if (!stats) return '';
-            const kdColor = parseFloat(stats.overallKD) >= 1 ? '#4caf50' : '#f44336';
-            const wrColor = parseInt(stats.winRate) >= 50 ? '#4caf50' : '#f44336';
+            const kdC = parseFloat(stats.overallKD) >= 1 ? '#4caf50' : '#f44336';
+            const wrC = parseInt(stats.winRate) >= 50 ? '#4caf50' : '#f44336';
             return `
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">${stats.matches}</div>
-                        <div class="stat-label">Matches</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" style="color:${wrColor}">${stats.winRate}%</div>
-                        <div class="stat-label">Win Rate</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" style="color:${kdColor}">${stats.overallKD}</div>
-                        <div class="stat-label">K/D Ratio</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${stats.avgKills}</div>
-                        <div class="stat-label">Avg Kills</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${stats.avgDeaths}</div>
-                        <div class="stat-label">Avg Deaths</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${stats.avgHsPercent}%</div>
-                        <div class="stat-label">Avg HS%</div>
-                    </div>
+                    ${statCard(stats.matches, 'Matches')}
+                    ${statCard(stats.winRate + '%', 'Win Rate', wrC)}
+                    ${statCard(stats.overallKD, 'K/D Ratio', kdC)}
+                    ${statCard(stats.avgKills, 'Avg Kills')}
+                    ${statCard(stats.avgDeaths, 'Avg Deaths')}
+                    ${statCard(stats.avgHsPercent + '%', 'Avg HS%')}
+                    ${statCard(stats.killsPerRound, 'Kills/Round')}
+                    ${statCard(stats.totalMVPs, 'Total MVPs')}
                 </div>`;
+        }
+
+        function statCard(value, label, color) {
+            const style = color ? ` style="color:${color}"` : '';
+            return `<div class="stat-card">
+                <div class="stat-value"${style}>${value}</div>
+                <div class="stat-label">${label}</div>
+            </div>`;
+        }
+
+        function renderStreakBar(matches, stats) {
+            if (!matches.length || !stats) return '';
+            const dots = matches.slice(0, 20).map(m =>
+                `<div class="streak-dot ${m.result === 'win' ? 'w' : 'l'}">${m.result === 'win' ? 'W' : 'L'}</div>`
+            ).join('');
+
+            const streakClass = stats.streakType === 'win' ? 'positive' : 'negative';
+            const streakLabel = stats.streakType === 'win' ? 'Win Streak' : 'Loss Streak';
+
+            return `
+                <div class="streak-info">
+                    <span><span class="streak-label">Current: </span><span class="streak-value ${streakClass}">${stats.streak} ${streakLabel}</span></span>
+                    <span><span class="streak-label">Record: </span><span class="streak-value">${stats.wins}W - ${stats.losses}L</span></span>
+                </div>
+                <div class="streak-bar">${dots}</div>`;
         }
 
         function renderHighlights(matches) {
             const { best, worst } = findBestWorst(matches);
             if (!best || !worst) return '';
 
-            function hlCard(m, type) {
-                const kd = m.kdRatio > 0 ? m.kdRatio.toFixed(2) : (m.deaths > 0 ? (m.kills / m.deaths).toFixed(2) : m.kills.toFixed(2));
+            function hl(m, type) {
+                const kd = getKD(m).toFixed(2);
                 const label = type === 'best' ? 'Best Match' : 'Worst Match';
                 return `
                     <div class="highlight-card ${type}">
                         <h4>${label}</h4>
                         <div class="hl-stats">
-                            <div><span>Map:</span> <strong>${escapeHtml(cleanMapName(m.map))}</strong></div>
-                            <div><span>Score:</span> <strong>${escapeHtml(String(m.score))}</strong></div>
+                            <div><span>Map:</span> <strong>${esc(cleanMapName(m.map))}</strong></div>
+                            <div><span>Score:</span> <strong>${esc(String(m.score))}</strong></div>
                             <div><span>K/D/A:</span> <strong>${m.kills}/${m.deaths}/${m.assists}</strong></div>
                             <div><span>K/D:</span> <strong>${kd}</strong></div>
-                            <div><span>Date:</span> <strong>${m.date}</strong></div>
+                            <div><span>HS%:</span> <strong>${Math.round(m.hsPercent || 0)}%</strong></div>
                         </div>
                     </div>`;
             }
 
-            return `<div class="highlights">${hlCard(best, 'best')}${hlCard(worst, 'worst')}</div>`;
+            return `<div class="highlights">${hl(best, 'best')}${hl(worst, 'worst')}</div>`;
         }
 
-        function renderCharts(matches) {
+        function renderKillBreakdown(stats) {
+            if (!stats) return '';
+            const max = Math.max(stats.totalTriple, stats.totalQuadro, stats.totalPenta, 1);
+            return `
+                <div class="kill-breakdown">
+                    <div class="kill-card">
+                        <h4>Multi-Kill Breakdown</h4>
+                        ${killBar('3K (Triple)', stats.totalTriple, max, '#ff9800')}
+                        ${killBar('4K (Quadro)', stats.totalQuadro, max, '#ff5722')}
+                        ${killBar('5K (Ace)', stats.totalPenta, max, '#f44336')}
+                    </div>
+                </div>`;
+        }
+
+        function killBar(label, value, max, color) {
+            const pct = max > 0 ? (value / max * 100) : 0;
+            return `
+                <div class="kill-bar">
+                    <div class="bar-label">${label}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width:${pct}%;background:${color}"></div>
+                    </div>
+                    <div class="bar-value">${value}</div>
+                </div>`;
+        }
+
+        function renderCharts() {
             return `
                 <div class="charts-grid">
                     <div class="chart-container">
@@ -653,173 +692,178 @@
                         <canvas id="kdChart"></canvas>
                     </div>
                     <div class="chart-container">
-                        <h3>Map Breakdown</h3>
+                        <h3>Map Breakdown (W/L)</h3>
                         <canvas id="mapChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Kills vs Deaths per Match</h3>
+                        <canvas id="killsChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Headshot % Trend</h3>
+                        <canvas id="hsChart"></canvas>
                     </div>
                 </div>`;
         }
 
+        // ── Chart Init ──────────────────────────────────────────
+        const charts = {};
+
+        function destroyCharts() {
+            for (const key of Object.keys(charts)) {
+                if (charts[key]) { charts[key].destroy(); delete charts[key]; }
+            }
+        }
+
+        function rebuildCharts(matches) {
+            destroyCharts();
+            initCharts(matches);
+        }
+
         function initCharts(matches) {
-            // Destroy existing charts
-            if (window.kdChart) { window.kdChart.destroy(); window.kdChart = null; }
-            if (window.mapChart) { window.mapChart.destroy(); window.mapChart = null; }
-
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-            const textColor = isDark ? '#aaa' : '#555';
+            const grid = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+            const txt = isDark ? '#aaa' : '#555';
 
-            // K/D Trend Chart
-            const reversed = [...matches].reverse();
-            const kdData = reversed.map(m =>
-                m.kdRatio > 0 ? m.kdRatio : (m.deaths > 0 ? m.kills / m.deaths : m.kills)
-            );
-            const kdLabels = reversed.map((m, i) => `#${i + 1}`);
+            // Oldest → newest for charts
+            const ordered = [...matches].reverse();
+
+            // 1) K/D Trend
+            const kdData = ordered.map(m => getKD(m));
             const kdColors = kdData.map(v => v >= 1 ? '#4caf50' : '#f44336');
 
-            const kdCtx = document.getElementById('kdChart');
-            if (kdCtx) {
-                window.kdChart = new Chart(kdCtx, {
+            const kdEl = document.getElementById('kdChart');
+            if (kdEl) {
+                charts.kd = new Chart(kdEl, {
                     type: 'bar',
                     data: {
-                        labels: kdLabels,
-                        datasets: [{
-                            label: 'K/D Ratio',
-                            data: kdData,
-                            backgroundColor: kdColors,
-                            borderRadius: 4,
-                        }]
+                        labels: ordered.map((_, i) => '#' + (i + 1)),
+                        datasets: [{ data: kdData, backgroundColor: kdColors, borderRadius: 4 }]
                     },
                     options: {
                         responsive: true,
-                        plugins: {
-                            legend: { display: false },
-                            annotation: undefined,
-                        },
+                        plugins: { legend: { display: false } },
                         scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: { color: gridColor },
-                                ticks: { color: textColor },
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: textColor },
-                            }
+                            y: { beginAtZero: true, grid: { color: grid }, ticks: { color: txt } },
+                            x: { grid: { display: false }, ticks: { color: txt } }
                         }
                     },
                     plugins: [{
-                        id: 'kdLine',
+                        id: 'refLine',
                         afterDraw(chart) {
-                            const yScale = chart.scales.y;
-                            const y = yScale.getPixelForValue(1);
+                            const y = chart.scales.y.getPixelForValue(1);
                             const ctx = chart.ctx;
                             ctx.save();
-                            ctx.strokeStyle = '#ffc107';
-                            ctx.lineWidth = 2;
+                            ctx.strokeStyle = '#ffc107'; ctx.lineWidth = 2;
                             ctx.setLineDash([6, 4]);
                             ctx.beginPath();
                             ctx.moveTo(chart.chartArea.left, y);
                             ctx.lineTo(chart.chartArea.right, y);
-                            ctx.stroke();
-                            ctx.restore();
+                            ctx.stroke(); ctx.restore();
                         }
                     }]
                 });
             }
 
-            // Map Breakdown Chart
+            // 2) Map Breakdown
             const mapStats = getMapStats(matches);
             const mapNames = Object.keys(mapStats);
-            const mapPlayed = mapNames.map(n => mapStats[n].played);
-            const mapWins = mapNames.map(n => mapStats[n].wins);
-            const mapLosses = mapNames.map(n => mapStats[n].played - mapStats[n].wins);
 
-            const mapCtx = document.getElementById('mapChart');
-            if (mapCtx) {
-                window.mapChart = new Chart(mapCtx, {
+            const mapEl = document.getElementById('mapChart');
+            if (mapEl) {
+                charts.map = new Chart(mapEl, {
                     type: 'bar',
                     data: {
                         labels: mapNames,
                         datasets: [
-                            {
-                                label: 'Wins',
-                                data: mapWins,
-                                backgroundColor: '#4caf50',
-                                borderRadius: 4,
-                            },
-                            {
-                                label: 'Losses',
-                                data: mapLosses,
-                                backgroundColor: '#f44336',
-                                borderRadius: 4,
-                            }
+                            { label: 'Wins', data: mapNames.map(n => mapStats[n].wins), backgroundColor: '#4caf50', borderRadius: 4 },
+                            { label: 'Losses', data: mapNames.map(n => mapStats[n].played - mapStats[n].wins), backgroundColor: '#f44336', borderRadius: 4 }
                         ]
                     },
                     options: {
                         responsive: true,
-                        plugins: {
-                            legend: {
-                                labels: { color: textColor }
-                            }
-                        },
+                        plugins: { legend: { labels: { color: txt } } },
                         scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { stepSize: 1, color: textColor },
-                                grid: { color: gridColor },
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: textColor },
-                                stacked: true,
-                            },
-                            y: {
-                                stacked: true,
-                                grid: { color: gridColor },
-                                ticks: { stepSize: 1, color: textColor },
-                            }
+                            x: { stacked: true, grid: { display: false }, ticks: { color: txt } },
+                            y: { stacked: true, beginAtZero: true, grid: { color: grid }, ticks: { stepSize: 1, color: txt } }
+                        }
+                    }
+                });
+            }
+
+            // 3) Kills vs Deaths
+            const killsEl = document.getElementById('killsChart');
+            if (killsEl) {
+                charts.kills = new Chart(killsEl, {
+                    type: 'line',
+                    data: {
+                        labels: ordered.map((_, i) => '#' + (i + 1)),
+                        datasets: [
+                            { label: 'Kills', data: ordered.map(m => m.kills), borderColor: '#4caf50', backgroundColor: 'rgba(76,175,80,0.1)', fill: true, tension: 0.3, pointRadius: 4 },
+                            { label: 'Deaths', data: ordered.map(m => m.deaths), borderColor: '#f44336', backgroundColor: 'rgba(244,67,54,0.1)', fill: true, tension: 0.3, pointRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: txt } } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: grid }, ticks: { color: txt } },
+                            x: { grid: { display: false }, ticks: { color: txt } }
+                        }
+                    }
+                });
+            }
+
+            // 4) Headshot % Trend
+            const hsEl = document.getElementById('hsChart');
+            if (hsEl) {
+                const hsData = ordered.map(m => m.hsPercent > 0 ? m.hsPercent : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0));
+                charts.hs = new Chart(hsEl, {
+                    type: 'line',
+                    data: {
+                        labels: ordered.map((_, i) => '#' + (i + 1)),
+                        datasets: [{
+                            label: 'HS%', data: hsData,
+                            borderColor: '#ff9800', backgroundColor: 'rgba(255,152,0,0.1)',
+                            fill: true, tension: 0.3, pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, grid: { color: grid }, ticks: { color: txt, callback: v => v + '%' } },
+                            x: { grid: { display: false }, ticks: { color: txt } }
                         }
                     }
                 });
             }
         }
 
-        function updateChartColors() {
-            // Re-render charts with correct theme colors
-            if (window.lastMatches) {
-                initCharts(window.lastMatches);
-            }
-        }
-
+        // ── Match Table ─────────────────────────────────────────
         function renderMatchTable(matches) {
-            if (matches.length === 0) {
-                return '<div class="error"><h3>No matches found</h3><p>This player has no recent CS2 matches on FACEIT.</p></div>';
-            }
+            if (matches.length === 0) return '<div class="error"><h3>No matches found</h3></div>';
 
             let rows = '';
             for (const m of matches) {
-                const kd = m.kdRatio > 0
-                    ? m.kdRatio.toFixed(2)
-                    : (m.deaths === 0 ? m.kills.toFixed(2) : (m.kills / m.deaths).toFixed(2));
+                const kd = getKD(m).toFixed(2);
                 const kdNum = parseFloat(kd);
                 const kdClass = kdNum > 1 ? 'kd-positive' : kdNum < 1 ? 'kd-negative' : 'kd-neutral';
-                const hsPercent = m.hsPercent > 0
-                    ? Math.round(m.hsPercent)
-                    : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0);
-                const resultClass = m.result === 'win' ? 'result-win' : 'result-loss';
-                const rowClass = m.result === 'win' ? 'win' : 'loss';
+                const hs = m.hsPercent > 0 ? Math.round(m.hsPercent) : (m.kills > 0 ? Math.round(m.headshots / m.kills * 100) : 0);
+                const rc = m.result === 'win' ? 'result-win' : 'result-loss';
 
                 rows += `
-                    <tr class="${rowClass}">
+                    <tr class="${m.result === 'win' ? 'win' : 'loss'}">
                         <td>${m.date}</td>
-                        <td class="map-name">${escapeHtml(cleanMapName(m.map))}</td>
-                        <td><span class="result ${resultClass}">${m.result === 'win' ? 'W' : 'L'}</span></td>
-                        <td class="score">${escapeHtml(String(m.score))}</td>
+                        <td class="map-name">${esc(cleanMapName(m.map))}</td>
+                        <td><span class="result ${rc}">${m.result === 'win' ? 'W' : 'L'}</span></td>
+                        <td class="score">${esc(String(m.score))}</td>
                         <td>${m.kills}</td>
                         <td>${m.deaths}</td>
                         <td>${m.assists}</td>
                         <td class="${kdClass}">${kd}</td>
-                        <td>${hsPercent}%</td>
+                        <td>${hs}%</td>
+                        <td>${m.mvps || 0}</td>
                     </tr>`;
             }
 
@@ -827,29 +871,20 @@
                 <div class="table-container">
                     <h3>Recent Matches</h3>
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Map</th>
-                                <th>Result</th>
-                                <th>Score</th>
-                                <th>Kills</th>
-                                <th>Deaths</th>
-                                <th>Assists</th>
-                                <th>K/D</th>
-                                <th>HS%</th>
-                            </tr>
-                        </thead>
+                        <thead><tr>
+                            <th>Date</th><th>Map</th><th>Result</th><th>Score</th>
+                            <th>Kills</th><th>Deaths</th><th>Assists</th><th>K/D</th>
+                            <th>HS%</th><th>MVPs</th>
+                        </tr></thead>
                         <tbody>${rows}</tbody>
                     </table>
                 </div>`;
         }
 
         // ── Helpers ─────────────────────────────────────────────
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
+        function esc(str) {
+            const d = document.createElement('div');
+            d.textContent = str; return d.innerHTML;
         }
 
         function cleanMapName(map) {
@@ -866,54 +901,47 @@
 
             if (!username) { alert('Please enter a FACEIT username'); return; }
 
-            btn.disabled = true;
-            btn.textContent = 'Loading...';
-            content.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Fetching stats for ${escapeHtml(username)}...</p>
-                </div>`;
+            btn.disabled = true; btn.textContent = 'Loading...';
+            content.innerHTML = `<div class="loading"><div class="spinner"></div><p>Fetching stats for ${esc(username)}...</p></div>`;
 
             try {
                 let player, matches, isLive;
 
                 if (apiKey) {
                     const data = await fetchLiveData(username, apiKey, limit);
-                    player = data.player;
-                    matches = data.matches;
-                    isLive = true;
+                    player = data.player; matches = data.matches; isLive = true;
                 } else {
                     player = { ...SAMPLE_PLAYER, nickname: username };
-                    matches = SAMPLE_MATCHES.slice(0, limit);
-                    isLive = false;
+                    matches = SAMPLE_MATCHES.slice(0, limit); isLive = false;
                 }
 
                 window.lastMatches = matches;
                 const stats = calcStats(matches);
 
+                destroyCharts();
                 content.innerHTML =
                     renderPlayerHeader(player, isLive) +
                     renderStatsCards(stats) +
+                    renderStreakBar(matches, stats) +
                     renderHighlights(matches) +
-                    renderCharts(matches) +
+                    renderKillBreakdown(stats) +
+                    renderCharts() +
                     renderMatchTable(matches);
 
-                // Init charts after DOM is updated
-                setTimeout(() => initCharts(matches), 50);
+                requestAnimationFrame(() => initCharts(matches));
 
             } catch (err) {
                 content.innerHTML = `
                     <div class="error">
                         <h3>Failed to load stats</h3>
-                        <p>${escapeHtml(err.message)}</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+                        <p>${esc(err.message)}</p>
+                        <p style="margin-top:0.5rem;font-size:0.85rem;">
                             Try without an API key to see sample data, or check your key at
-                            <a href="https://developers.faceit.com" target="_blank" style="color: var(--accent);">developers.faceit.com</a>
+                            <a href="https://developers.faceit.com" target="_blank" style="color:var(--accent);">developers.faceit.com</a>
                         </p>
                     </div>`;
             } finally {
-                btn.disabled = false;
-                btn.textContent = 'Fetch Stats';
+                btn.disabled = false; btn.textContent = 'Fetch Stats';
             }
         }
     </script>
