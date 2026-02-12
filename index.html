@@ -413,7 +413,10 @@
             html.setAttribute('data-theme', next);
             localStorage.setItem('faceit-theme', next);
             document.getElementById('themeToggle').innerHTML = next === 'dark' ? '&#9790;' : '&#9728;';
-            if (window.lastMatches) rebuildCharts(window.lastMatches);
+            if (window.lastMatches) {
+                rebuildCharts(window.lastMatches);
+                if (window.lastEloHistory) initEloChart(window.lastEloHistory, window.lastMatches);
+            }
         }
 
         (function() {
@@ -426,6 +429,7 @@
 
         // ── Sample Data ─────────────────────────────────────────
         const SAMPLE_PLAYER = { nickname: 'SamplePlayer', elo: 1847, level: 7 };
+        const SAMPLE_ELO_HISTORY = [1772, 1797, 1773, 1798, 1823, 1799, 1824, 1800, 1822, 1847];
 
         const SAMPLE_MATCHES = [
             { date: '2026-02-10', map: 'de_mirage', result: 'win', score: '13 / 8', kills: 24, deaths: 15, assists: 5, headshots: 12, hsPercent: 50, kdRatio: 1.60, rounds: 21, mvps: 4, tripleKills: 2, quadroKills: 0, pentaKills: 0 },
@@ -687,6 +691,10 @@
         function renderCharts() {
             return `
                 <div class="charts-grid">
+                    <div class="chart-container full-width">
+                        <h3>ELO Progression</h3>
+                        <canvas id="eloChart"></canvas>
+                    </div>
                     <div class="chart-container">
                         <h3>K/D Ratio Trend</h3>
                         <canvas id="kdChart"></canvas>
@@ -840,6 +848,63 @@
             }
         }
 
+        function initEloChart(eloHistory, matches) {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const grid = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+            const txt = isDark ? '#aaa' : '#555';
+            const ordered = [...matches].reverse();
+
+            const eloEl = document.getElementById('eloChart');
+            if (!eloEl || !eloHistory || eloHistory.length === 0) return;
+
+            const pointColors = ordered.map(m => m.result === 'win' ? '#4caf50' : '#f44336');
+            const minElo = Math.min(...eloHistory);
+            const maxElo = Math.max(...eloHistory);
+            const padding = 30;
+
+            charts.elo = new Chart(eloEl, {
+                type: 'line',
+                data: {
+                    labels: ordered.map((m, i) => cleanMapName(m.map)),
+                    datasets: [{
+                        label: 'ELO',
+                        data: eloHistory,
+                        borderColor: '#ff9800',
+                        backgroundColor: 'rgba(255,152,0,0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: pointColors,
+                        pointBorderColor: pointColors,
+                        pointBorderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(ctx) {
+                                    const m = ordered[ctx.dataIndex];
+                                    return m.result === 'win' ? 'WIN' : 'LOSS';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: minElo - padding,
+                            max: maxElo + padding,
+                            grid: { color: grid },
+                            ticks: { color: txt }
+                        },
+                        x: { grid: { display: false }, ticks: { color: txt } }
+                    }
+                }
+            });
+        }
+
         // ── Match Table ─────────────────────────────────────────
         function renderMatchTable(matches) {
             if (matches.length === 0) return '<div class="error"><h3>No matches found</h3></div>';
@@ -891,6 +956,17 @@
             return map.replace(/^de_/, '').replace(/^\w/, c => c.toUpperCase());
         }
 
+        function estimateEloHistory(currentElo, matches) {
+            const eloChange = 25;
+            const history = [currentElo];
+            let elo = currentElo;
+            for (let i = 0; i < matches.length - 1; i++) {
+                elo -= matches[i].result === 'win' ? eloChange : -eloChange;
+                history.unshift(elo);
+            }
+            return history;
+        }
+
         // ── Main ────────────────────────────────────────────────
         async function fetchStats() {
             const username = document.getElementById('username').value.trim();
@@ -907,15 +983,19 @@
             try {
                 let player, matches, isLive;
 
+                let eloHistory;
                 if (apiKey) {
                     const data = await fetchLiveData(username, apiKey, limit);
                     player = data.player; matches = data.matches; isLive = true;
+                    eloHistory = estimateEloHistory(player.elo, matches);
                 } else {
                     player = { ...SAMPLE_PLAYER, nickname: username };
                     matches = SAMPLE_MATCHES.slice(0, limit); isLive = false;
+                    eloHistory = SAMPLE_ELO_HISTORY.slice(SAMPLE_ELO_HISTORY.length - limit);
                 }
 
                 window.lastMatches = matches;
+                window.lastEloHistory = eloHistory;
                 const stats = calcStats(matches);
 
                 destroyCharts();
@@ -928,7 +1008,10 @@
                     renderCharts() +
                     renderMatchTable(matches);
 
-                requestAnimationFrame(() => initCharts(matches));
+                requestAnimationFrame(() => {
+                    initCharts(matches);
+                    initEloChart(eloHistory, matches);
+                });
 
             } catch (err) {
                 content.innerHTML = `
